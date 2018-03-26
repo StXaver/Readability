@@ -179,16 +179,26 @@ class Text_on_url:
 
 
 if __name__ == '__main__':
-    url = sys.argv[1]
-    r = requests.get(url)
-    rb = Text_on_url()
-    redact = Redact_text()
-    saver = Saver()
-    result = rb.run(r.text, url)
-    result = redact.transfers(result)
-    for i in range(len(result)):
-        result[i] = redact.tab(result[i])
-        result[i] = redact.redact(result[i])
-    file_name = saver.save_in_doc(result, url)
-
-    sys.exit('Successful\nFile location: ' + file_name)
+    try:
+        #url = sys.argv[1]
+        pass
+    except(IndexError):
+        sys.exit('Not entered URL')
+    url = 'adaf'
+    try:
+        r = requests.get(url)
+    except:
+        sys.exit('Invalid URL')
+    try:
+        rb = Text_on_url()
+        redact = Redact_text()
+        saver = Saver()
+        result = rb.run(r.text, url)
+        result = redact.transfers(result)
+        for i in range(len(result)):
+            result[i] = redact.tab(result[i])
+            result[i] = redact.redact(result[i])
+        file_location = saver.save_in_doc(result, url)
+    except:
+        sys.exit('Not a known bug\nPlease contact our technical support')
+    sys.exit('Successful\nFile location: ' + file_location)
